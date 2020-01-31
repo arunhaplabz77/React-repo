@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
 import WithSpinner from "./../../components/with-spinner/with-spinner.component";
-import  LoginPage  from "./../login/login.page";
 
 import { selectOrganisations, isLoading } from "./../../redux/organisation/organisation.selectors";
 import { setOrganisationsStartAsync } from "./../../redux/organisation/organisation.actions";

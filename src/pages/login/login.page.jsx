@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import { Jumbotron } from "react-bootstrap";
 
 import { Redirect } from "react-router";
-
+import Toast from "react-bootstrap/Toast";
 import axios from "axios";
 
 import "./login.styles.css";
@@ -20,7 +20,9 @@ class LoginPage extends React.Component {
       email: "",
       password: "",
       redirectToReferrer: false,
-      isLoggedIn: false
+      isLoggedIn: false,
+      errMsg: "",
+      show: false
     };
   }
   handleSubmit(event) {
@@ -35,22 +37,43 @@ class LoginPage extends React.Component {
       .then(response => {
         window.localStorage.setItem("token", response.data.token);
 
-        this.setState({isLoggedIn:true});
+        this.setState({ isLoggedIn: true });
         console.log(response.data.token);
       })
-      .catch(function(error) {
+      .catch(error => {
+        this.setState({ errMsg: error, show: true });
         console.log(error);
-        
       });
   }
 
+  errorMsg(message, show) {
+    if (!message) return null;
+
+    return (
+      <Toast
+        onClose={() => this.setState({ show: false })}
+        show={this.state.show}
+        delay={3000}
+        autohide
+      >
+        <Toast.Header>Authentication Error !!!</Toast.Header>
+        <Toast.Body>{message}</Toast.Body>
+      </Toast>
+    );
+  }
+
   render() {
-    if (this.state.isLoggedIn === true) {
+    let logging = this.state.isLoggedIn;
+    const { message } = this.state.errMsg;
+    const { show } = this.state.show;
+
+    if (logging === true) {
       return <Redirect to="/" />;
-    } 
+    }
 
     return (
       <div className="">
+        {this.errorMsg(message, show)}
         <h1 className="title">Login Form</h1>
 
         <div>
