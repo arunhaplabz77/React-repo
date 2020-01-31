@@ -1,0 +1,11 @@
+/* .nav-bar {
+  flex-grow: 1;
+} */
+
+.toggle {
+  color: white;
+}
+
+.is-active {
+  color: red;
+}

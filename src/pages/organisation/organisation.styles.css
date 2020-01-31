@@ -1,0 +1,7 @@
+.organisation-actions {
+  display: flex;
+  justify-content: space-between;
+}
+.search-field {
+  max-width: 200px;
+}
