@@ -1,8 +1,7 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
-import Image from "react-bootstrap/Image";
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row'
+
+import {Redirect} from "react-router-dom"
 import "./organisation.styles.css";
 
 import { connect } from "react-redux";
@@ -10,6 +9,7 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
 import WithSpinner from "./../../components/with-spinner/with-spinner.component";
+import  LoginPage  from "./../login/login.page";
 
 import { selectOrganisations, isLoading } from "./../../redux/organisation/organisation.selectors";
 import { setOrganisationsStartAsync } from "./../../redux/organisation/organisation.actions";
@@ -25,6 +25,7 @@ class OrganisationPage extends React.Component {
 
     this.state={
       searchField:""
+   
     }
   }
   componentDidMount() {
@@ -38,6 +39,11 @@ class OrganisationPage extends React.Component {
   };
 
   render() {
+  
+    if (this.state.isLoggedIn === false) {
+      return <Redirect to="/login" />;
+    }
+     
 
     const { searchField } = this.state;
 
@@ -49,9 +55,6 @@ class OrganisationPage extends React.Component {
     );
 
     return (
-
-   
- 
 
       <Container>
 
