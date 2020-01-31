@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Jumbotron } from "react-bootstrap";
 
-import {Redirect} from "react-router";
+import { Redirect } from "react-router";
 
 import axios from "axios";
 
@@ -24,32 +24,31 @@ class LoginPage extends React.Component {
     };
   }
   handleSubmit(event) {
-    this.setState({ redirectToReferrer: true, isLoggedIn:true});
-
     event.preventDefault();
     const { email, password } = this.state;
-
+    this.setState({ redirectToReferrer: true });
     axios
       .post("http://localhost:3002/api/user/login", {
         email,
         password
       })
-      .then(function(response) {
-        console.log(response)
-       localStorage.setItem('token', response.data)
-       
+      .then(response => {
+        window.localStorage.setItem("token", response.data.token);
+
+        this.setState({isLoggedIn:true});
+        console.log(response.data.token);
       })
       .catch(function(error) {
-
-         window.alert(error);
-      
+        console.log(error);
+        
       });
   }
 
   render() {
     if (this.state.isLoggedIn === true) {
       return <Redirect to="/" />;
-    }
+    } 
+
     return (
       <div className="">
         <h1 className="title">Login Form</h1>
